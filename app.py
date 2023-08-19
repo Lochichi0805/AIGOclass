@@ -5,7 +5,7 @@ from events.service import *
 from line_bot_api import *
 import os
 from extensions import db,migrate
-
+from events.admin import *
 from models.user import User
 
 app = Flask(__name__)
@@ -68,6 +68,13 @@ def handle_message(event):
 
     elif message_text == '@預約服務':
         service_category_event(event)
+    
+    elif message_text.startswith('*'):
+        if event.source.user_id not in ["U72a5bfd4648cece9e05d94fd3227bc8f"]:
+            return
+        if message_text in ["*data","*d"]:
+            list_reservation_event(event)
+
 
 @handler.add(PostbackAction)
 def handle_postback(event):
