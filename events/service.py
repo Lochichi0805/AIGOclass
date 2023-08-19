@@ -9,26 +9,115 @@ from models.reservation import Reservation
 
 # 預約相關的功能都會寫在這裡
 # 增加多個服務項目
+# services = {
+#     1:{
+#         'category': '威士忌',
+#         'img_url': 'https://twthedalmore.com/assets/img/products/classic/img_product_classic-11.webp',
+#         'title': '大摩12年',
+#         'duration': '12y',
+#         'description': '表現出富含多變細緻的香氣與口感，是一支超越年份的經典酒款',
+#         'price':2300,
+#         'post_url': 'https://linecorp.com'
+#     },
+#     2:{
+#         'category': '威士忌',
+#         'img_url': 'https://twthedalmore.com/assets/img/products/classic/img_product_classic-09.webp',
+#         'title': '大摩15年',
+#         'duration': '15y',
+#         'description': '代表滑順、豐富以及美好，完美呈現典型的大摩家族風格',
+#         'price':4600,
+#         'post_url': 'https://linecorp.com'
+#     }
+# }
+
 services = {
-    1:{
-        'category': '威士忌',
-        'img_url': 'https://twthedalmore.com/assets/img/products/classic/img_product_classic-11.webp',
-        'title': '大摩12年',
-        'duration': '12y',
-        'description': '表現出富含多變細緻的香氣與口感，是一支超越年份的經典酒款',
-        'price':2300,
+    1: {
+        'category': '按摩調理',
+        'img_url': 'https://drive.google.com/uc?export=download&id=15ftd3m_rOX3Op_js9B5OCiz2a4KyQfXi',
+        'title': '按摩調理（指壓／精油）',
+        'duration': '90min',
+        'description': '深層肌肉緊繃痠痛、工作壓力和緊繃情緒、身體疲勞者，想解除肌肉緊繃僵硬不適感',
+        'price': 2000,
         'post_url': 'https://linecorp.com'
     },
-    2:{
-        'category': '威士忌',
-        'img_url': 'https://twthedalmore.com/assets/img/products/classic/img_product_classic-09.webp',
-        'title': '大摩15年',
-        'duration': '15y',
-        'description': '代表滑順、豐富以及美好，完美呈現典型的大摩家族風格',
-        'price':4600,
+    2: {
+        'category': '按摩調理',
+        'img_url': 'https://drive.google.com/uc?export=download&id=1naYV7ySDy1PBTR9_smzchSu3xPfuKRYO',
+        'title': '運動按摩（按摩與伸展）',
+        'duration': '90min',
+        'description': '全身肌肉按摩放鬆與伸展，能夠改善運動後引發的延遲性痠痛，血液循環流通順暢',
+        'price': 1500,
         'post_url': 'https://linecorp.com'
-    }
+    },
+    3: {
+        'category': '按摩調理',
+        'img_url': 'https://drive.google.com/uc?export=download&id=1dOiR8rnSski88B7s8tEClN6bR4OXP2VY',
+        'title': '熱石精油紓壓',
+        'duration': '90min',
+        'description': '「火山石」成份含有豐富礦物質及獨特的自然能量，溫熱觸感能活絡循環，鬆解疲勞感，舒緩肌肉緊繃',
+        'price': 2000,
+        'post_url': 'https://linecorp.com'
+    },
+    4: {
+        'category': '臉部護理',
+        'img_url': 'https://drive.google.com/uc?export=download&id=1j9k2ivv1D3DwthQABmiI-PLsn6pN7sIZ',
+        'title': '粉刺淨化 + 深層保濕',
+        'duration': '90min',
+        'description': '臉部淨化李，粉刺淨化 + 深層保濕繃',
+        'price': 1500,
+        'post_url': 'https://linecorp.com'
+    },
 }
+
+def service_category_event(event):
+    image_carousel_template_message = TemplateSendMessage(
+        alt_text='請選擇想服務類別',
+        template=ImageCarouselTemplate(
+            columns=[
+                ImageCarouselColumn(
+                    image_url='https://drive.google.com/uc?export=download&id=1UbeFJNmNF3PfPYDdoEEWPxZma5M82x-T',
+                    action=PostbackAction(
+                        label='按摩調理',
+                        display_text='想了解按摩調理',
+                        data='action=service&category=按摩調理'
+                    )
+                ),
+                ImageCarouselColumn(
+                    image_url='https://drive.google.com/uc?export=download&id=1-n-1HqfSsCJQmUhlYhPgWMowE6NTBDUR',
+                    action=PostbackAction(
+                        label='臉部護理',
+                        display_text='想了解臉部護理',
+                        data='action=service&category=臉部護理'
+                    )
+                )
+            ]
+        )
+    )
+    line_bot_api.reply_message(
+        event.reply_token,
+        [image_carousel_template_message])
+    
+# def service_category_event(event):
+#     image_carousel_template_message = TemplateSendMessage(
+#         alt_text = '請選擇想服務類別 ',
+#         template = ImageCarouselTemplate(
+#             columns = [
+#                 ImageCarouselColumn(
+#                     image_url = 'https://cdn.pixabay.com/photo/2022/12/15/14/21/generated-7657832_1280.jpg',
+#                     action = PostbackAction(
+#                         label = '威士忌',
+#                         display_text = '想了解威士忌',
+#                         data = 'action=service&category=威士忌'
+#                     )
+                
+#                 )
+#             ]
+#         )
+#     )
+#     line_bot_api.reply_message(
+#         event.reply_token,
+#         [image_carousel_template_message]
+#     )
 
 def service_event(event):
     data = dict(parse_qsl(event.postback.data))
@@ -132,27 +221,7 @@ def service_event(event):
     )
 
 
-def service_category_event(event):
-    image_carousel_template_message = TemplateSendMessage(
-        alt_text = '請選擇想服務類別 ',
-        template = ImageCarouselTemplate(
-            columns = [
-                ImageCarouselColumn(
-                    image_url = 'https://cdn.pixabay.com/photo/2022/12/15/14/21/generated-7657832_1280.jpg',
-                    action = PostbackAction(
-                        label = '威士忌',
-                        display_text = '想了解威士忌',
-                        data = 'action=service&category=威士忌'
-                    )
-                
-                )
-            ]
-        )
-    )
-    line_bot_api.reply_message(
-        event.reply_token,
-        [image_carousel_template_message]
-    )
+
 
 def service_select_date_event(event):
     
