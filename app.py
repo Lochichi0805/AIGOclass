@@ -8,12 +8,12 @@ from extensions import db,migrate
 
 app = Flask(__name__)
 
-app.config.form_object(os.environ.get('APP_SETTING','config.DevConfig'))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://aigodb:1S2DFyAepcx5uAGNTZjeba5aFHoJk61M@dpg-cjbj1p7db61s7397arcg-a/mspa_4e9z'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.app = app
-db.init_app(app)
-migrate.init_app(app, db)
+# app.config.form_object(os.environ.get('APP_SETTING','config.DevConfig'))
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://aigodb:1S2DFyAepcx5uAGNTZjeba5aFHoJk61M@dpg-cjbj1p7db61s7397arcg-a/mspa_4e9z'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db.app = app
+# db.init_app(app)
+# migrate.init_app(app, db)
 
 
 @app.route("/callback", methods=['POST'])
