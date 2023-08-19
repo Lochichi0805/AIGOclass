@@ -1,16 +1,16 @@
 from flask import Flask, request, abort
-from urllib.parse import parse_qsl
+
 from events.basic import *
 from events.service import *
 from line_bot_api import *
 import os
 from extensions import db,migrate
-from events.admin import *
+
 from models.user import User
 
 app = Flask(__name__)
 
-app.config.form_object(os.environ.get('APP_SETTING','config.DevConfig'))
+app.config.from_object(os.environ.get('APP_SETTING','config.DevConfig'))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://admin:zWHtLA4ywiKaUSLjSLPlo6mG2o4n62hq@dpg-cjg2seb6fquc73amcjs0-a.singapore-postgres.render.com/aigodb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.app = app
