@@ -11,7 +11,7 @@ from models.reservation import Reservation
 # 增加多個服務項目
 services = {
     1:{
-        'catagory': '威士忌',
+        'category': '威士忌',
         'img_url': 'https://twthedalmore.com/assets/img/products/classic/img_product_classic-11.webp',
         'title': '大摩12年',
         'duration': '12y',
@@ -20,7 +20,7 @@ services = {
         'post_url': 'https://linecorp.com'
     },
     2:{
-        'catagory': '威士忌',
+        'category': '威士忌',
         'img_url': 'https://twthedalmore.com/assets/img/products/classic/img_product_classic-09.webp',
         'title': '大摩15年',
         'duration': '15y',
