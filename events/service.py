@@ -255,6 +255,7 @@ def service_select_date_event(event):
                                         text=f"我要預約{day}({weekday_string[day.weekday()]})這天",
                                         data=f"action=select_time&service_id={data['service_id']}&date{day}")
             )
+            quick_reply_buttons.append(quick_reply_button)
 
     text_message = TextSendMessage(
         text = "請問要預約哪一天?",
@@ -275,48 +276,22 @@ def service_select_time_event(event):
     quick_reply_buttons = []
 
     for time in available_time:
-        quick_reply_buttons = QuickReplyButton(
+        quick_reply_button = QuickReplyButton(
             action = PostbackAction(
                 label=time,
                 text=f'{time} 這個時段',
-                data=f'action=confirm&service_id={data["service_id"]}&data={data["data"]}&time={time}'
+                data=f'action=confirm&service_id={data["service_id"]}&date={data["date"]}&time={time}'
             )
         )
-        quick_reply_buttons.append(quick_reply_buttons)
+        quick_reply_buttons.append(quick_reply_button)
 
     text_message = TextSendMessage(
         text = "請問要預約哪個時段?",
-        quick_reply = QuickReply(item=quick_reply_buttons)
+        quick_reply = QuickReply(items=quick_reply_buttons)
     )
     line_bot_api.reply_message(
         event.reply_token,
         [text_message]
-    )
-
-def service_confirm_event(event):
-    data = dict(parse_qsl(event.postback.data))
-    bookiing_service = services[int(data['service_id'])]
-
-    confirm_template_message = TemplateSendMessage(
-        alt_text="請確認預約項目",
-        template=ConfirmTemplate(
-            text=f'您即將預約\n\n{bookiing_service["title"]}{bookiing_service["duration"]}\n預約時段: {data["data"]}{data["time"]}\n\n',
-            actions=[
-                PostbackAction(
-                    label="確定",
-                    display_text="確認沒問題!",
-                    data=f"action=confirmed&service_id={data['service_id']}&data={data['data']}&time={'time'}"
-                ),
-                MessageAction(
-                    label="重新預約",
-                    display_text="我想重新預約",
-                )
-            ]
-        )
-    )
-    line_bot_api.reply_message(
-        event.reply_token,
-        [confirm_template_message]
     )
 
 def is_booked(event, user):
@@ -348,8 +323,35 @@ def is_booked(event, user):
     else:
         return False
 
+def service_confirm_event(event):
+    data = dict(parse_qsl(event.postback.data))
+    booking_service = services[int(data['service_id'])]
+
+    confirm_template_message = TemplateSendMessage(
+        alt_text="請確認預約項目",
+        template=ConfirmTemplate(
+                text=f'您即將預約\n\n{booking_service["title"]} {booking_service["duration"]}\n預約時段: {data["date"]} {data["time"]}\n\n確認沒問題請按【確定】',            actions=[
+                PostbackAction(
+                    label="確定",
+                    display_text="確認沒問題!",
+                    data=f"action=confirmed&service_id={data['service_id']}&data={data['data']}&time={'time'}"
+                ),
+                MessageAction(
+                    label="重新預約",
+                    text="我想重新預約",
+                )
+            ]
+        )
+    )
+    line_bot_api.reply_message(
+        event.reply_token,
+        [confirm_template_message]
+    )
+
+
+
 def service_confirmed_event(event):
-    data = dict(parse_qsl(event.postbacl))
+    data = dict(parse_qsl(event.postback.data))
 
     booking_service = services[int(data['service_id'])]
     booking_datetime = datetime.datetime.strptime(f"{data['date']}{data['time']}","%Y-%m-%d %H:%M")
