@@ -207,7 +207,7 @@ def service_select_time_event(event):
             action = PostbackAction(
                 label=time,
                 text=f'{time} 這個時段',
-                data=f'action = confirm&service_id={data["service_id"]}&data={data["data"]}&time={time}'
+                data=f'action=confirm&service_id={data["service_id"]}&data={data["data"]}&time={time}'
             )
         )
         quick_reply_buttons.append(quick_reply_buttons)
