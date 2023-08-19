@@ -154,30 +154,70 @@ def service_category_event(event):
         [image_carousel_template_message]
     )
 
-# def service_category_event(event):
-#     image_carousel_template_message = TemplateSendMessage(
-#         alt_text='請選擇想服務類別',
-#         template=ImageCarouselTemplate(
-#             columns=[
-#                 ImageCarouselColumn(
-#                     image_url='https://drive.google.com/uc?export=download&id=1UbeFJNmNF3PfPYDdoEEWPxZma5M82x-T',
-#                     action=PostbackAction(
-#                         label='按摩調理',
-#                         display_text='想了解按摩調理',
-#                         data='action=service&category=按摩調理'
-#                     )
-#                 ),
-#                 ImageCarouselColumn(
-#                     image_url='https://drive.google.com/uc?export=download&id=1-n-1HqfSsCJQmUhlYhPgWMowE6NTBDUR',
-#                     action=PostbackAction(
-#                         label='臉部護理',
-#                         display_text='想了解臉部護理',
-#                         data='action=service&category=臉部護理'
-#                     )
-#                 )
-#             ]
-#         )
-#     )
-#     line_bot_api.reply_message(
-#         event.reply_token,
-#         [image_carousel_template_message])
+def service_select_date_event(event):
+    
+    data = dict(parse_qsl(event.postback.data))
+
+    weekday_string = {
+        0:'一',
+        1:'二',
+        2:'三',
+        3:'四',
+        4:'五',
+        5:'六',
+        6:'日',
+    }
+
+    business_day = [1, 2, 3, 4, 5, 6]
+
+    quick_reply_buttons = []
+
+    today = datetime.datetime.today().date()
+
+    for x in range(1,11):
+        day = today + datetime.timedelta(days=x)
+
+        if day.weekday() in business_day:
+            quick_reply_button = QuickReplyButton(
+                action = PostbackAction(label=f"{day}({weekday_string[day.weekday()]})",
+                                        text=f"我要預約{day}({weekday_string[day.weekday()]})這天",
+                                        data=f"action=select_time&service_id={data['service_id']}&date{day}")
+            )
+
+    text_message = TextSendMessage(
+        text = "請問要預約哪一天?",
+        quick_reply = QuickReply(item=quick_reply_buttons)
+      )
+    
+    line_bot_api.reply_message(
+        event.reply_token,
+        [text_message]
+      )
+
+def service_select_time_event(event):
+    
+    data = dict(parse_qsl(event.postback.data))
+
+    available_time = ['11:00','14:00','17:00','20:00']
+
+    quick_reply_buttons = []
+
+    for time in available_time:
+        quick_reply_buttons = QuickReplyButton(
+            action = PostbackAction(
+                label=time,
+                text=f'{time} 這個時段',
+                data=f'action = confirm&service_id={data["service_id"]}&data={data["data"]}&time={time}'
+            )
+        )
+        quick_reply_buttons.append(quick_reply_buttons)
+
+    text_message = TextSendMessage(
+        text = "請問要預約哪個時段?",
+        quick_reply = QuickReply(item=quick_reply_buttons)
+    )
+    line_bot_api.reply_message(
+        event.reply_token,
+        [text_message]
+    )
+
