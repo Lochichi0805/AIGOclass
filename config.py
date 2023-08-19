@@ -7,7 +7,7 @@ class Config:
 
 class DevConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'postgres://aigodb:1S2DFyAepcx5uAGNTZjeba5aFHoJk61M@dpg-cjbj1p7db61s7397arcg-a.singapore-postgres.render.com/mspa_4e9z'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://admin:zWHtLA4ywiKaUSLjSLPlo6mG2o4n62hq@dpg-cjg2seb6fquc73amcjs0-a.singapore-postgres.render.com/aigodb'
 
 
 class ProdConfig(Config):

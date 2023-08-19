@@ -1,0 +1,8 @@
+新增資料表
+建立extensions.py 所有擴充的套件都放在這裡
+把 extensions models都建立好之後
+就要在 terminal 中輸入 flask db init 初始化資料庫
+就會自動在專案中建立 migrations 資料夾,接著輸入
+flask db migrate -m "Initial migration." 字串是備註初始化資料庫
+就會在versions資料夾中看到資料庫的版本以及升級和降級的程式碼
+接著第三個指令 flask db upgrade
