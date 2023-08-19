@@ -75,7 +75,6 @@ def handle_message(event):
         if message_text in ["*data","*d"]:
             list_reservation_event(event)
 
-
 @handler.add(PostbackEvent)
 def handler_postback(event):
     data = dict(parse_qsl(event.postback.data))
@@ -85,7 +84,11 @@ def handler_postback(event):
         service_select_date_event(event)
     elif data.get('action') == 'select_time':
         service_select_time_event(event)
-        
+    elif data.get('action') == 'confirm':
+        service_confirm_event(event)
+    elif data.get('action') == 'confirmed':
+        service_confirmed_event(event)
+
 
 @handler.add(PostbackAction)
 def handle_postback(event):
