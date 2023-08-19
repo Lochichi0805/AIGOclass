@@ -27,7 +27,7 @@ services = {
         'description': '代表滑順、豐富以及美好，完美呈現典型的大摩家族風格',
         'price':4600,
         'post_url': 'https://linecorp.com'
-    },
+    }
 }
 
 def service_event(event):
