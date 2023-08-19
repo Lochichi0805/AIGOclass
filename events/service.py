@@ -253,13 +253,13 @@ def service_select_date_event(event):
             quick_reply_button = QuickReplyButton(
                 action = PostbackAction(label=f"{day}({weekday_string[day.weekday()]})",
                                         text=f"我要預約{day}({weekday_string[day.weekday()]})這天",
-                                        data=f"action=select_time&service_id={data['service_id']}&date{day}")
+                                        data=f"action=select_time&service_id={data['service_id']}&date={day}")
             )
             quick_reply_buttons.append(quick_reply_button)
 
     text_message = TextSendMessage(
         text = "請問要預約哪一天?",
-        quick_reply = QuickReply(item=quick_reply_buttons)
+        quick_reply = QuickReply(items=quick_reply_buttons)
       )
     
     line_bot_api.reply_message(
