@@ -1,0 +1,43 @@
+#pip install flask_sqlalchemy
+#pip install psycopg2-binary 連線的套件
+#pip install Flask-Migrate 管理資料庫的套件
+先安裝 PostgreSQL
+
+google打上 Postgres,過程會輸入密碼,就是之後管理的
+預設的port是5432,語系也是預設的就好,記得最後安裝完不要開啟
+接著透過工具管理資料庫,輸入密碼登入,要看資料庫還要再輸入一
+次密碼,
+
+建立專案資料庫和會員資料表
+
+建立管理者,在左邊login按右鍵點create
+General name輸入admin
+Definition 設定密碼
+Privilleges 設定權限把 Can login打開,記得儲存
+
+建立資料庫 在左邊databases按右鍵點create
+General mspa Owner選擇admin,記得儲存
+
+接下來安裝#pip install flask_sqlalchemy #pip install psycopg2 連線的套件
+
+
+新增資料表
+建立extensions.py 所有擴充的套件都放在這裡
+把 extensions models都建立好之後
+就要在 terminal 中輸入 flask db init 初始化資料庫
+就會自動在專案中建立 migrations 資料夾,接著輸入
+flask db migrate -m "Initial migration." 字串是備註初始化資料庫
+就會在versions資料夾中看到資料庫的版本以及升級和降級的程式碼
+接著第三個指令 flask db upgrade
+
+就可以在 database 中的 Schemas中看到 右鍵 properties
+
+
+儲存會員資料
+./ngrok config add-authtoken 26vMOAEHP3ZwcoNcBdn7rXWDUXB_7rtaRx9DMgKDreJv3cFMC
+ngrok config add-authtoken 26vMOAEHP3ZwcoNcBdn7rXWDUXB_7rtaRx9DMgKDreJv3cFMC
+ngrok http 5000 --region=ap
+
+
+Heroku 資料庫設定
+APP_SETTINGS   config.ProdConfig
